@@ -1,38 +1,21 @@
 package com.yun.colorist.registry;
 
-import com.yun.colorist.Colorist;
 import com.yun.colorist.component.MagicAttrData;
 import com.yun.colorist.network.CritPayload;
 import com.yun.colorist.network.MagicStartPayload;
 import com.yun.colorist.network.MagicStopPayload;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
 
 public class ModPayloads {
 
-    public static final CustomPayload.Id<MagicStartPayload> MAGIC_START_ID = new CustomPayload.Id<>(Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "magic_start"));
-    public static final CustomPayload.Id<MagicStopPayload> MAGIC_STOP_ID = new CustomPayload.Id<>(Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "magic_stop"));
-    public static final CustomPayload.Id<CritPayload> CRIT_ID = new CustomPayload.Id<>(Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "crit"));
-
     public static void initialize() {
-        Registry.register(Registries.PACKET_TYPE, Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "magic_start"), MAGIC_START_ID);
-        Registry.register(Registries.PACKET_TYPE, Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "magic_stop"), MAGIC_STOP_ID);
-        Registry.register(Registries.PACKET_TYPE, Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "crit"), CRIT_ID);
-
-        ServerPlayNetworking.registerGlobalReceiver(MagicStartPayload.TYPE, (payload, context) -> {});
-        ServerPlayNetworking.registerGlobalReceiver(MagicStopPayload.TYPE, (payload, context) -> {});
-        ServerPlayNetworking.registerGlobalReceiver(CritPayload.TYPE, (payload, context) -> {});
+        // Register S2C payloads (server -> client)
+        PayloadTypeRegistry.playS2C().register(MagicStartPayload.TYPE, MagicStartPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(MagicStopPayload.TYPE, MagicStopPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(CritPayload.TYPE, CritPayload.CODEC);
     }
 
     public static void sendMagicStart(ServerPlayerEntity player, MagicAttrData attr) {

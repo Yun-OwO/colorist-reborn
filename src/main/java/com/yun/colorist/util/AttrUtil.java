@@ -94,7 +94,7 @@ public class AttrUtil {
         for (int i = 0; i < text.length(); i++) {
             float ratio = i / (float) Math.max(text.length() - 1, 1);
             String color = ColorUtil.merge(startColor, endColor, ratio);
-            result.copy().append(Text.literal(String.valueOf(text.char(i))).setStyle(net.minecraft.text.Style.EMPTY.withColor(net.minecraft.util.Formatting.byName(color)))));
+            result.copy().append(Text.literal(String.valueOf(text.charAt(i))).setStyle(net.minecraft.text.Style.EMPTY.withColor(net.minecraft.util.Formatting.byName(color))));
         }
         return result;
     }

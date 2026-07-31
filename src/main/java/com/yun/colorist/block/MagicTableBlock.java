@@ -140,7 +140,8 @@ public class MagicTableBlock extends Block {
             if (be instanceof MagicTableBlockEntity table && table.hasItem()) {
                 ItemStack stack = table.getDisplayItem();
                 if (!stack.isEmpty() && !player.isCreative()) {
-                    dropStack(world, pos, stack);
+                    net.minecraft.util.math.Vec3d center = net.minecraft.util.math.Vec3d.ofCenter(pos);
+                    world.spawnEntity(new net.minecraft.entity.ItemEntity(world, center.x, center.y + 0.5, center.z, stack));
                 }
             }
         }

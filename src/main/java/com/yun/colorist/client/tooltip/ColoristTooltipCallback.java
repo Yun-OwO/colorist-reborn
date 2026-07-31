@@ -7,10 +7,12 @@ import com.yun.colorist.registry.ModComponents;
 import com.yun.colorist.registry.ModItems;
 import com.yun.colorist.util.AttrUtil;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+
+import java.util.List;
 
 public class ColoristTooltipCallback {
 
@@ -24,24 +26,26 @@ public class ColoristTooltipCallback {
         });
     }
 
-    private static void addPaperTooltip(ItemStack stack, java.util.List<Text> lines) {
+    private static void addPaperTooltip(ItemStack stack, List<Text> lines) {
         MagicPaperData data = stack.getOrDefault(ModComponents.MAGIC_PAPER, MagicPaperData.DEFAULT);
         MagicAttrData attr = AttrUtil.calculateFromPaper(data.level(), data.attr());
-        lines.add(Text.translatable("tooltip.colorist.level").append(String.valueOf(data.level())).styled(s -> s.withColor(Integer.parseInt(data.attr().substring(1), 16))));
+        int colorInt = parseColor(data.attr());
+        lines.add(Text.translatable("tooltip.colorist.level").append(Text.literal(String.valueOf(data.level())).styled(s -> s.withColor(colorInt))));
         addAttrTooltip(lines, attr, null);
     }
 
-    private static void addBookTooltip(ItemStack stack, java.util.List<Text> lines) {
+    private static void addBookTooltip(ItemStack stack, List<Text> lines) {
         MagicBookData data = stack.getOrDefault(ModComponents.MAGIC_BOOK, MagicBookData.DEFAULT);
         MagicAttrData attr = data.attr();
-        lines.add(Text.translatable("tooltip.colorist.level").append(String.valueOf(attr.level())).styled(s -> s.withColor(Integer.parseInt(attr.color().substring(1), 16))));
+        int colorInt = parseColor(attr.color());
+        lines.add(Text.translatable("tooltip.colorist.level").append(Text.literal(String.valueOf(attr.level())).styled(s -> s.withColor(colorInt))));
         addAttrTooltip(lines, attr, Text.translatable("tooltip.colorist.count", data.attrs().size(), AttrUtil.MAX_ATTRS));
     }
 
-    private static void addAttrTooltip(java.util.List<Text> lines, MagicAttrData attr, Text ext) {
+    private static void addAttrTooltip(List<Text> lines, MagicAttrData attr, Text ext) {
         if (attr == null) return;
-        lines.add(Text.translatable("tooltip.colorist.rainbow").append(buildProgress(attr.r(), attr.g(), attr.b())));
-        lines.add(Text.translatable("tooltip.colorist.yin_yang").append(buildProgress(attr.brightness(), attr.darkness(), 0)));
+        lines.add(Text.translatable("tooltip.colorist.rainbow").append(buildProgressBar(attr.r(), attr.g(), attr.b())));
+        lines.add(Text.translatable("tooltip.colorist.yin_yang").append(buildProgressBar(attr.brightness(), attr.darkness(), 0)));
         if (Screen.hasShiftDown()) {
             lines.add(Text.empty());
             lines.add(Text.translatable("tooltip.colorist.red", attr.r()).formatted(Formatting.RED));
@@ -65,7 +69,22 @@ public class ColoristTooltipCallback {
         }
     }
 
-    private static Text buildProgress(int r, int g, int b) {
-        return Text.literal("");
+    private static Text buildProgressBar(int r, int g, int b) {
+        int sum = r + g + b;
+        if (sum == 0) return Text.empty();
+        int rLen = Math.round((float) r / sum * AttrUtil.PROG_LENGTH);
+        int gLen = Math.round((float) g / sum * AttrUtil.PROG_LENGTH);
+        int bLen = AttrUtil.PROG_LENGTH - rLen - gLen;
+        return Text.literal("▍".repeat(Math.max(rLen, 0))).formatted(Formatting.RED)
+                .append(Text.literal("▍".repeat(Math.max(gLen, 0))).formatted(Formatting.GREEN))
+                .append(Text.literal("▍".repeat(Math.max(bLen, 0))).formatted(Formatting.BLUE));
+    }
+
+    private static int parseColor(String hex) {
+        try {
+            return Integer.parseInt(hex.substring(1), 16);
+        } catch (Exception e) {
+            return 0xFFFFFF;
+        }
     }
 }

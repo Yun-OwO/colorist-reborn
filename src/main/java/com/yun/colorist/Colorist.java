@@ -2,6 +2,7 @@ package com.yun.colorist;
 
 import com.yun.colorist.event.InventoryHandler;
 import com.yun.colorist.event.LootHandler;
+import com.yun.colorist.event.MagicBookHandler;
 import com.yun.colorist.registry.*;
 import com.yun.colorist.world.ModBiomeModifications;
 import net.fabricmc.api.ModInitializer;
@@ -25,6 +26,7 @@ public class Colorist implements ModInitializer {
 
         InventoryHandler.register();
         LootHandler.register();
+        MagicBookHandler.register();
         ModBiomeModifications.register();
     }
 }

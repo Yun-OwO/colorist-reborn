@@ -8,11 +8,10 @@
     "yun"
   ],
   "contact": {
-    "homepage": "https://github.com/1026073226/colorist",
-    "sources": "https://github.com/1026073226/colorist"
+    "homepage": "https://github.com/Yun-OwO/colorist-reborn",
+    "sources": "https://github.com/Yun-OwO/colorist-reborn"
   },
   "license": "MIT",
-  "icon": "assets/colorist/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -20,9 +19,6 @@
     ],
     "client": [
       "com.yun.colorist.client.ColoristClient"
-    ],
-    "modmenu": [
-      "com.yun.colorist.compat.modmenu.ColoristModMenuApiImpl"
     ]
   },
   "mixins": [
@@ -32,7 +28,7 @@
     "fabricloader": ">=0.16.14",
     "minecraft": "~1.21.11",
     "java": ">=21",
-    "fabric-api": ">=0.119.5"
+    "fabric-api": "*"
   },
   "suggests": {
     "roughlyenoughitems": "*",
