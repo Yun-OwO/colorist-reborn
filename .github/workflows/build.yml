@@ -26,19 +26,6 @@ jobs:
         with:
           gradle-version: 9.5.1
 
-      - name: Configure mirror (China)
-        run: |
-          mkdir -p ~/.gradle
-          cat > ~/.gradle/init.gradle << 'EOF'
-          allprojects {
-            repositories {
-              maven { url 'https://maven.fabricmc.net/' }
-              maven { url 'https://maven.aliyun.com/repository/public' }
-              mavenCentral()
-            }
-          }
-          EOF
-
       - name: Build
         run: gradle build --no-daemon --stacktrace
 
