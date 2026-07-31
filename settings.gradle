@@ -1,4 +1,4 @@
-rootProject.name = archives_base_name
+rootProject.name = 'colorist'
 
 pluginManagement {
     repositories {
