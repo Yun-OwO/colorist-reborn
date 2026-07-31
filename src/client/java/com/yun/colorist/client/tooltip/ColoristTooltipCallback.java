@@ -8,7 +8,7 @@ import com.yun.colorist.registry.ModItems;
 import com.yun.colorist.util.AttrUtil;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -46,7 +46,7 @@ public class ColoristTooltipCallback {
         if (attr == null) return;
         lines.add(Component.translatable("tooltip.colorist.rainbow").append(buildProgressBar(attr.r(), attr.g(), attr.b())));
         lines.add(Component.translatable("tooltip.colorist.yin_yang").append(buildProgressBar(attr.brightness(), attr.darkness(), 0)));
-        if (Screen.hasShiftDown()) {
+        if (Minecraft.getInstance().hasShiftDown()) {
             lines.add(Component.empty());
             lines.add(Component.translatable("tooltip.colorist.red", attr.r()).withStyle(ChatFormatting.RED));
             lines.add(Component.translatable("tooltip.colorist.green", attr.g()).withStyle(ChatFormatting.GREEN));
