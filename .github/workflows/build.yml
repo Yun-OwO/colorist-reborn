@@ -36,3 +36,17 @@ jobs:
           name: colorist-jar
           path: build/libs/*.jar
           if-no-files-found: warn
+
+      - name: Upload Gradle cache (for local build)
+        uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          name: gradle-cache
+          path: |
+            ~/.gradle/caches/modules-2/
+            ~/.gradle/caches/fabric-loom/
+            ~/.gradle/caches/jars-*/
+            ~/.gradle/caches/transforms-*/
+            .gradle/loom-cache/
+          if-no-files-found: warn
+          retention-days: 7
