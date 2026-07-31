@@ -12,14 +12,6 @@ base {
 
 repositories {
 	mavenCentral()
-	maven {
-		name = "ModMaven"
-		url = "https://modmaven.dev"
-	}
-	maven {
-		name = "CurseMaven"
-		url = "https://cursemaven.com"
-	}
 }
 
 loom {
@@ -37,10 +29,6 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-
-	// Compatibility
-	modCompileOnly "mezz.jei:jei-1.21.11-fabric-api:27.21.0.54"
-	modRuntimeOnly "mezz.jei:jei-1.21.11-fabric:27.21.0.54"
 }
 
 processResources {

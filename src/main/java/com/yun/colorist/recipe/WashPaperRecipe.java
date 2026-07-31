@@ -57,11 +57,6 @@ public class WashPaperRecipe implements CraftingRecipe {
     }
 
     @Override
-    public RecipeType<WashPaperRecipe> getType() {
-        return ModRecipes.WASH_PAPER_TYPE;
-    }
-
-    @Override
     public CraftingBookCategory category() {
         return CraftingBookCategory.MISC;
     }
