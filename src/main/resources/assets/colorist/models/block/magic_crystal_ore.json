@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube_all",
+  "parent": "minecraft:block/cube_all",
   "textures": {
     "all": "colorist:block/magic_crystal_ore",
     "particle": "colorist:block/magic_crystal_ore"
