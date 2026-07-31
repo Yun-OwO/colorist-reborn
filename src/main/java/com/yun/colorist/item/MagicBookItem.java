@@ -10,6 +10,7 @@ import com.yun.colorist.util.AttrUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +49,9 @@ public class MagicBookItem extends Item {
 
         stack.setDamageValue((int) ((1 - Math.max(combined.level() / (cost * 100), 0)) * 1000));
         ModPayloads.sendMagicStart(player, combined);
-        MagicBookHandler.startCast(player);
+        if (player instanceof ServerPlayer serverPlayer) {
+            MagicBookHandler.startCast(serverPlayer);
+        }
 
         return InteractionResult.SUCCESS;
     }
