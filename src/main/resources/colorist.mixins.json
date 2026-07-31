@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.yun.colorist.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "InventoryMixin",
+    "ServerPlayerMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

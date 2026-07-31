@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGB",
+    "RBR",
+    "SGG"
+  ],
+  "key": {
+    "R": { "item": "colorist:rainbow_dye" },
+    "G": { "item": "colorist:grayscale_dye" },
+    "B": { "item": "colorist:bleak_dye" },
+    "R": { "item": "minecraft:redstone" },
+    "B": { "item": "minecraft:book" },
+    "S": { "item": "minecraft:sugar" },
+    "G": { "item": "minecraft:glowstone_dust" }
+  },
+  "result": {
+    "id": "colorist:magic_book",
+    "components": {
+      "colorist:magic_book": {
+        "attrs": [],
+        "attr": { "r": 0, "g": 0, "b": 0, "brightness": 0, "darkness": 0, "level": 0, "color": "#FFFFFF" },
+        "hasHpBonus": false
+      }
+    }
+  }
+}

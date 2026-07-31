@@ -1,0 +1,27 @@
+# Build output
+build/
+.gradle/
+out/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Minecraft / Fabric
+run/
+runs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Other
+*.log
+
+# Reference KubeJS project (not part of the mod)
+colorist/

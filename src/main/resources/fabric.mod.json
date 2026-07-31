@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "colorist",
+  "version": "${version}",
+  "name": "Colorist",
+  "description": "A magic color attribute mod.",
+  "authors": [
+    "yun"
+  ],
+  "contact": {
+    "homepage": "https://github.com/1026073226/colorist",
+    "sources": "https://github.com/1026073226/colorist"
+  },
+  "license": "MIT",
+  "icon": "assets/colorist/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.yun.colorist.Colorist"
+    ],
+    "client": [
+      "com.yun.colorist.client.ColoristClient"
+    ],
+    "modmenu": [
+      "com.yun.colorist.compat.modmenu.ColoristModMenuApiImpl"
+    ]
+  },
+  "mixins": [
+    "colorist.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": ">=0.119.5"
+  },
+  "suggests": {
+    "roughlyenoughitems": "*",
+    "jei": "*",
+    "modmenu": "*"
+  }
+}

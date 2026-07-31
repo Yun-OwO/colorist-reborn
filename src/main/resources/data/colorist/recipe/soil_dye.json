@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:dirt" }
+  ],
+  "result": { "id": "colorist:soil_dye", "count": 4 }
+}

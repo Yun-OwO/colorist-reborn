@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:wheat_seeds" }
+  ],
+  "result": { "id": "minecraft:lime_dye" }
+}
