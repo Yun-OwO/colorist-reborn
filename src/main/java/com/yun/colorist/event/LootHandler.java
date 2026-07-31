@@ -44,7 +44,7 @@ public class LootHandler {
     }
 
     private static boolean matchesEntity(Identifier lootTableId, EntityType<?> type) {
-        return type.getDefaultLootTable().identifier().equals(lootTableId);
+        return type.getDefaultLootTable().map(k -> k.identifier().equals(lootTableId)).orElse(false);
     }
 
     private static LootPool.Builder buildMagicPaperPool(int min, int max) {

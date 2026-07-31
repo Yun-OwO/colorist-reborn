@@ -35,7 +35,7 @@ public class MagicBookHandler {
     private static void tickPlayer(ServerPlayer player) {
         CastData data = CASTING.get(player.getUUID());
         if (data == null) return;
-        long now = player.serverLevel().getGameTime();
+        long now = player.level().getGameTime();
         if (now - data.startTime > 10) {
             CASTING.remove(player.getUUID());
             DAMAGED.remove(player.getUUID());
@@ -59,14 +59,14 @@ public class MagicBookHandler {
                     player.displayClientMessage(Component.translatable("message.colorist.crit"), false);
                 }
                 ModPayloads.sendCrit(player, crit);
-                living.hurt(player.serverLevel().damageSources().playerAttack(player), (float) damage);
+                living.hurt(player.level().damageSources().playerAttack(player), (float) damage);
                 DAMAGED.put(player.getUUID(), true);
             }
         }
     }
 
     public static void startCast(ServerPlayer player) {
-        CASTING.put(player.getUUID(), new CastData(player.serverLevel().getGameTime()));
+        CASTING.put(player.getUUID(), new CastData(player.level().getGameTime()));
         DAMAGED.put(player.getUUID(), false);
     }
 
