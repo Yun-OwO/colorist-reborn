@@ -45,7 +45,7 @@ public class ColoristTooltipCallback {
     private static void addAttrTooltip(List<Component> lines, MagicAttrData attr, Component ext) {
         if (attr == null) return;
         lines.add(Component.translatable("tooltip.colorist.rainbow").append(buildProgressBar(attr.r(), attr.g(), attr.b())));
-        lines.add(Component.translatable("tooltip.colorist.yin_yang").append(buildProgressBar(attr.brightness(), attr.darkness(), 0)));
+        lines.add(Component.translatable("tooltip.colorist.yin_yang").append(buildYinYangProgressBar(attr.brightness(), attr.darkness())));
         if (Minecraft.getInstance().hasShiftDown()) {
             lines.add(Component.empty());
             lines.add(Component.translatable("tooltip.colorist.red", attr.r()).withStyle(ChatFormatting.RED));
@@ -78,6 +78,15 @@ public class ColoristTooltipCallback {
         return Component.literal("▍".repeat(Math.max(rLen, 0))).withStyle(ChatFormatting.RED)
                 .append(Component.literal("▍".repeat(Math.max(gLen, 0))).withStyle(ChatFormatting.GREEN))
                 .append(Component.literal("▍".repeat(Math.max(bLen, 0))).withStyle(ChatFormatting.BLUE));
+    }
+
+    private static Component buildYinYangProgressBar(int brightness, int darkness) {
+        int sum = brightness + darkness;
+        if (sum == 0) return Component.empty();
+        int brightLen = Math.round((float) brightness / sum * AttrUtil.PROG_LENGTH);
+        int darkLen = AttrUtil.PROG_LENGTH - brightLen;
+        return Component.literal("▍".repeat(Math.max(brightLen, 0))).withStyle(ChatFormatting.WHITE)
+                .append(Component.literal("▍".repeat(Math.max(darkLen, 0))).withStyle(ChatFormatting.GRAY));
     }
 
     private static int parseColor(String hex) {
