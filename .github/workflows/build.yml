@@ -15,20 +15,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup JDK 25
+      - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 25
+          java-version: 21
 
-      - name: Setup Gradle
+      - name: Setup Gradle 9.5.1
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 9.5.1
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Configure mirror (China)
+        run: |
+          mkdir -p ~/.gradle
+          cat > ~/.gradle/init.gradle << 'EOF'
+          allprojects {
+            repositories {
+              maven { url 'https://maven.aliyun.com/repository/public' }
+              maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+              maven { url 'https://maven.fabricmc.net/' }
+              mavenCentral()
+            }
+          }
+          EOF
 
       - name: Build
-        run: ./gradlew build --no-daemon --stacktrace
+        run: gradle build --no-daemon --stacktrace
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
