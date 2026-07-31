@@ -4,10 +4,10 @@ import com.yun.colorist.Colorist;
 import com.yun.colorist.component.MagicAttrData;
 import com.yun.colorist.component.MagicBookData;
 import com.yun.colorist.component.MagicPaperData;
-import net.minecraft.component.DataComponentType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 
 public class ModComponents {
 
@@ -21,7 +21,7 @@ public class ModComponents {
             DataComponentType.<MagicAttrData>builder().persistent(MagicAttrData.CODEC).packetCodec(MagicAttrData.PACKET_CODEC));
 
     private static <T> DataComponentType<T> register(String name, DataComponentType.Builder<T> builder) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.fromNamespaceAndPath(Colorist.MOD_ID, name), builder.build());
+        return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Identifier.fromNamespaceAndPath(Colorist.MOD_ID, name), builder.build());
     }
 
     public static void initialize() {

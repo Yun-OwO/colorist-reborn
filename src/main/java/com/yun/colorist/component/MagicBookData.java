@@ -3,8 +3,8 @@ package com.yun.colorist.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ public record MagicBookData(List<MagicAttrData> attrs, MagicAttrData attr, boole
             Codec.BOOL.fieldOf("hasHpBonus").forGetter(MagicBookData::hasHpBonus)
     ).apply(instance, MagicBookData::new));
 
-    public static final PacketCodec<ByteBuf, MagicBookData> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.collection(ArrayList::new, MagicAttrData.PACKET_CODEC), MagicBookData::attrs,
+    public static final StreamCodec<ByteBuf, MagicBookData> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.collection(ArrayList::new, MagicAttrData.PACKET_CODEC), MagicBookData::attrs,
             MagicAttrData.PACKET_CODEC, MagicBookData::attr,
-            PacketCodecs.BOOLEAN, MagicBookData::hasHpBonus,
+            ByteBufCodecs.BOOL, MagicBookData::hasHpBonus,
             MagicBookData::new
     );
 

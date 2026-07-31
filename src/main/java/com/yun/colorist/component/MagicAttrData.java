@@ -2,10 +2,9 @@ package com.yun.colorist.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.yun.colorist.Colorist;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public record MagicAttrData(int r, int g, int b, int brightness, int darkness, int level, String color) {
 
@@ -19,14 +18,14 @@ public record MagicAttrData(int r, int g, int b, int brightness, int darkness, i
             Codec.STRING.fieldOf("color").forGetter(MagicAttrData::color)
     ).apply(instance, MagicAttrData::new));
 
-    public static final PacketCodec<ByteBuf, MagicAttrData> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.VAR_INT, MagicAttrData::r,
-            PacketCodecs.VAR_INT, MagicAttrData::g,
-            PacketCodecs.VAR_INT, MagicAttrData::b,
-            PacketCodecs.VAR_INT, MagicAttrData::brightness,
-            PacketCodecs.VAR_INT, MagicAttrData::darkness,
-            PacketCodecs.VAR_INT, MagicAttrData::level,
-            PacketCodecs.STRING, MagicAttrData::color,
+    public static final StreamCodec<ByteBuf, MagicAttrData> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT, MagicAttrData::r,
+            ByteBufCodecs.VAR_INT, MagicAttrData::g,
+            ByteBufCodecs.VAR_INT, MagicAttrData::b,
+            ByteBufCodecs.VAR_INT, MagicAttrData::brightness,
+            ByteBufCodecs.VAR_INT, MagicAttrData::darkness,
+            ByteBufCodecs.VAR_INT, MagicAttrData::level,
+            ByteBufCodecs.STRING_UTF8, MagicAttrData::color,
             MagicAttrData::new
     );
 

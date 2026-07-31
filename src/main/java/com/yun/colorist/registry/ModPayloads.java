@@ -6,8 +6,8 @@ import com.yun.colorist.network.MagicStartPayload;
 import com.yun.colorist.network.MagicStopPayload;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 public class ModPayloads {
 
@@ -18,21 +18,21 @@ public class ModPayloads {
         PayloadTypeRegistry.playS2C().register(CritPayload.TYPE, CritPayload.CODEC);
     }
 
-    public static void sendMagicStart(ServerPlayerEntity player, MagicAttrData attr) {
+    public static void sendMagicStart(ServerPlayer player, MagicAttrData attr) {
         ServerPlayNetworking.send(player, new MagicStartPayload(attr.r() / 10f, attr.g() / 10f, attr.b() / 10f));
     }
 
-    public static void sendMagicStart(PlayerEntity player, MagicAttrData attr) {
-        if (player instanceof ServerPlayerEntity serverPlayer) {
+    public static void sendMagicStart(Player player, MagicAttrData attr) {
+        if (player instanceof ServerPlayer serverPlayer) {
             sendMagicStart(serverPlayer, attr);
         }
     }
 
-    public static void sendMagicStop(ServerPlayerEntity player) {
+    public static void sendMagicStop(ServerPlayer player) {
         ServerPlayNetworking.send(player, new MagicStopPayload());
     }
 
-    public static void sendCrit(ServerPlayerEntity player, boolean crit) {
+    public static void sendCrit(ServerPlayer player, boolean crit) {
         ServerPlayNetworking.send(player, new CritPayload(crit));
     }
 }

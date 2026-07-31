@@ -1,9 +1,9 @@
 package com.yun.colorist.block;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class MagicCrystalOreBlock extends Block {
-    public MagicCrystalOreBlock(Settings settings) {
-        super(settings);
+    public MagicCrystalOreBlock(Properties properties) {
+        super(properties);
     }
 }

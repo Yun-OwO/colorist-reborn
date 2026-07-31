@@ -3,8 +3,8 @@ package com.yun.colorist.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public record MagicPaperData(int level, String attr) {
 
@@ -13,9 +13,9 @@ public record MagicPaperData(int level, String attr) {
             Codec.STRING.fieldOf("attr").forGetter(MagicPaperData::attr)
     ).apply(instance, MagicPaperData::new));
 
-    public static final PacketCodec<ByteBuf, MagicPaperData> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.VAR_INT, MagicPaperData::level,
-            PacketCodecs.STRING, MagicPaperData::attr,
+    public static final StreamCodec<ByteBuf, MagicPaperData> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT, MagicPaperData::level,
+            ByteBufCodecs.STRING_UTF8, MagicPaperData::attr,
             MagicPaperData::new
     );
 
