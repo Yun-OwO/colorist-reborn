@@ -1,4 +1,24 @@
-﻿
-/run_logs
-/run_logs.zip
+# Gradle
+.gradle/
+build/
+run/
+colorist/
 
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+nbproject/
+
+# Misc
+*.log
+*.swp
+*.tmp
+.DS_Store
+Thumbs.db
+
+# CI logs
+run_logs/
+run_logs.zip

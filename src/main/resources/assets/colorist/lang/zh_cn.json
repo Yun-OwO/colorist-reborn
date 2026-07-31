@@ -31,5 +31,6 @@
   "tooltip.colorist.br": "暴击率: %.2f",
   "tooltip.colorist.bd": "暴击伤害: %.2f",
   "tooltip.colorist.shift": "按住shift查看详情",
-  "tooltip.colorist.count": "数量: %d/%d"
+  "tooltip.colorist.count": "数量: %d/%d",
+  "jei.colorist.wash_paper": "洗纸"
 }

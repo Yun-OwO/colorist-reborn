@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 public class WashPaperRecipe implements CraftingRecipe {
@@ -53,6 +54,11 @@ public class WashPaperRecipe implements CraftingRecipe {
     @Override
     public RecipeSerializer<? extends CraftingRecipe> getSerializer() {
         return ModRecipes.WASH_PAPER_SERIALIZER;
+    }
+
+    @Override
+    public RecipeType<WashPaperRecipe> getType() {
+        return ModRecipes.WASH_PAPER_TYPE;
     }
 
     @Override
