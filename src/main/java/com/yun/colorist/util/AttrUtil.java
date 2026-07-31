@@ -1,8 +1,8 @@
 package com.yun.colorist.util;
 
 import com.yun.colorist.component.MagicAttrData;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 
 public class AttrUtil {
 
@@ -70,8 +70,8 @@ public class AttrUtil {
         return new MagicAttrData(r / l, g / l, b / l, brightness / l, darkness / l, level / l, color);
     }
 
-    public static Text progressText(MagicAttrData attr) {
-        Text result = Text.empty();
+    public static Component progressText(MagicAttrData attr) {
+        Component result = Component.empty();
         int r = attr.r();
         int g = attr.g();
         int b = attr.b();
@@ -83,18 +83,18 @@ public class AttrUtil {
         return result;
     }
 
-    private static Text progressBlock(int part, int sum, String color) {
+    private static Component progressBlock(int part, int sum, String color) {
         int n = Math.round((part / (float) sum) * PROG_LENGTH);
-        Text t = Text.literal("▍".repeat(Math.max(n, 0)));
+        Component t = Component.literal("▍".repeat(Math.max(n, 0)));
         return t;
     }
 
-    public static Text gradientText(String text, String startColor, String endColor) {
-        Text result = Text.empty();
+    public static Component gradientText(String text, String startColor, String endColor) {
+        Component result = Component.empty();
         for (int i = 0; i < text.length(); i++) {
             float ratio = i / (float) Math.max(text.length() - 1, 1);
             String color = ColorUtil.merge(startColor, endColor, ratio);
-            result.copy().append(Text.literal(String.valueOf(text.charAt(i))).setStyle(net.minecraft.text.Style.EMPTY.withColor(net.minecraft.util.Formatting.byName(color))));
+            result.copy().append(Component.literal(String.valueOf(text.charAt(i))).setStyle(Style.EMPTY.withColor(ColorUtil.hexToInt(color))));
         }
         return result;
     }

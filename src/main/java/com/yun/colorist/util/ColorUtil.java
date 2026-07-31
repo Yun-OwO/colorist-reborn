@@ -1,6 +1,6 @@
 package com.yun.colorist.util;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,9 +39,9 @@ public class ColorUtil {
     }
 
     public static String rgbToHex(int r, int g, int b) {
-        r = MathHelper.clamp(r, 0, 255);
-        g = MathHelper.clamp(g, 0, 255);
-        b = MathHelper.clamp(b, 0, 255);
+        r = Mth.clamp(r, 0, 255);
+        g = Mth.clamp(g, 0, 255);
+        b = Mth.clamp(b, 0, 255);
         return String.format("#%02X%02X%02X", r, g, b);
     }
 
@@ -53,7 +53,7 @@ public class ColorUtil {
     public static String merge(String c1, String c2, float ratio) {
         int[] rgb1 = hexToRgb(c1 == null ? "#FFFFFF" : c1);
         int[] rgb2 = hexToRgb(c2 == null ? "#FFFFFF" : c2);
-        float r = MathHelper.clamp(ratio, 0f, 1f);
+        float r = Mth.clamp(ratio, 0f, 1f);
         int rr = Math.round(rgb1[0] * (1 - r) + rgb2[0] * r);
         int rg = Math.round(rgb1[1] * (1 - r) + rgb2[1] * r);
         int rb = Math.round(rgb1[2] * (1 - r) + rgb2[2] * r);

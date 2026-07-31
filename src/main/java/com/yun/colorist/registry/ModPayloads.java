@@ -13,9 +13,9 @@ public class ModPayloads {
 
     public static void initialize() {
         // Register S2C payloads (server -> client)
-        PayloadTypeRegistry.playS2C().register(MagicStartPayload.TYPE, MagicStartPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(MagicStopPayload.TYPE, MagicStopPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(CritPayload.TYPE, CritPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(MagicStartPayload.TYPE, MagicStartPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(MagicStopPayload.TYPE, MagicStopPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(CritPayload.TYPE, CritPayload.CODEC);
     }
 
     public static void sendMagicStart(ServerPlayer player, MagicAttrData attr) {

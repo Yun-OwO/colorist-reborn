@@ -1,16 +1,15 @@
 package com.yun.colorist.world;
 
 import com.yun.colorist.Colorist;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class ModPlacedFeatures {
 
-    public static final RegistryKey<PlacedFeature> MAGIC_CRYSTAL_ORE_PLACED_KEY = RegistryKey.of(
-            RegistryKeys.PLACED_FEATURE,
+    public static final ResourceKey<PlacedFeature> MAGIC_CRYSTAL_ORE_PLACED_KEY = ResourceKey.create(
+            Registries.PLACED_FEATURE,
             Identifier.fromNamespaceAndPath(Colorist.MOD_ID, "magic_crystal_ore")
     );
 }

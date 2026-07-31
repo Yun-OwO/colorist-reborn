@@ -9,100 +9,101 @@ import com.yun.colorist.registry.ModComponents;
 import com.yun.colorist.registry.ModItems;
 import com.yun.colorist.util.AttrUtil;
 import com.yun.colorist.util.ColorUtil;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MagicTableBlock extends Block {
 
-    public MagicTableBlock(AbstractBlock.Settings settings) {
-        super(settings);
+    public MagicTableBlock(BlockBehaviour.Properties properties) {
+        super(properties);
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient) return ActionResult.SUCCESS;
-        BlockEntity be = world.getBlockEntity(pos);
-        if (!(be instanceof MagicTableBlockEntity table)) return ActionResult.PASS;
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof MagicTableBlockEntity table)) return InteractionResult.PASS;
 
-        ItemStack held = player.getStackInHand(Hand.MAIN_HAND);
+        ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack display = table.getDisplayItem();
 
         if (!display.isEmpty() && !held.isEmpty()) {
-            return handleProcess(world, pos, player, table, display, held);
+            return handleProcess(level, pos, player, table, display, held);
         }
 
         if (display.isEmpty() && !held.isEmpty()) {
             table.setDisplayItem(held.split(1));
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         if (!display.isEmpty() && held.isEmpty()) {
-            player.getInventory().offerOrDrop(display.copy());
+            player.getInventory().placeItemBackInInventory(display.copy());
             table.setDisplayItem(ItemStack.EMPTY);
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
-    private ActionResult handleProcess(World world, BlockPos pos, PlayerEntity player, MagicTableBlockEntity table, ItemStack display, ItemStack held) {
-        if (display.isOf(ModItems.MAGIC_PAPER)) {
-            return processPaper(world, pos, player, table, display, held);
-        } else if (display.isOf(ModItems.MAGIC_BOOK)) {
-            return processBook(world, pos, player, table, display, held);
+    private InteractionResult handleProcess(Level level, BlockPos pos, Player player, MagicTableBlockEntity table, ItemStack display, ItemStack held) {
+        if (display.is(ModItems.MAGIC_PAPER)) {
+            return processPaper(level, pos, player, table, display, held);
+        } else if (display.is(ModItems.MAGIC_BOOK)) {
+            return processBook(level, pos, player, table, display, held);
         } else {
-            player.sendMessage(Text.translatable("message.colorist.cannot_dye"), false);
-            return ActionResult.FAIL;
+            player.displayClientMessage(Component.translatable("message.colorist.cannot_dye"), false);
+            return InteractionResult.FAIL;
         }
     }
 
-    private ActionResult processPaper(World world, BlockPos pos, PlayerEntity player, MagicTableBlockEntity table, ItemStack paper, ItemStack held) {
+    private InteractionResult processPaper(Level level, BlockPos pos, Player player, MagicTableBlockEntity table, ItemStack paper, ItemStack held) {
         MagicPaperData data = paper.getOrDefault(ModComponents.MAGIC_PAPER, MagicPaperData.DEFAULT);
-        String dyeColor = ColorUtil.DYE_COLORS.get(Identifier.of(held.getItem().toString()).getPath());
+        String dyeColor = ColorUtil.DYE_COLORS.get(BuiltInRegistries.ITEM.getKey(held.getItem()).getPath());
         if (dyeColor != null) {
             String newColor = ColorUtil.merge(data.attr(), dyeColor, 1f / data.level());
             int newLevel = data.level() + 1;
             ItemStack newPaper = paper.copy();
             newPaper.set(ModComponents.MAGIC_PAPER, new MagicPaperData(newLevel, newColor));
             table.setDisplayItem(newPaper);
-            held.decrement(1);
-            player.sendMessage(Text.translatable("message.colorist.dye_success").setStyle(net.minecraft.text.Style.EMPTY.withColor(net.minecraft.util.Formatting.byName(newColor))), false);
-            return ActionResult.SUCCESS;
-        } else if (held.isOf(ModItems.MAGIC_CRYSTAL)) {
+            held.shrink(1);
+            player.displayClientMessage(Component.translatable("message.colorist.dye_success").withStyle(Style.EMPTY.withColor(ColorUtil.hexToInt(newColor))), false);
+            return InteractionResult.SUCCESS;
+        } else if (held.is(ModItems.MAGIC_CRYSTAL)) {
             ItemStack newPaper = paper.copy();
             newPaper.set(ModComponents.MAGIC_PAPER, new MagicPaperData(data.level() + 5, data.attr()));
             table.setDisplayItem(newPaper);
-            held.decrement(1);
-            player.sendMessage(Text.translatable("message.colorist.add_success"), false);
-            return ActionResult.SUCCESS;
+            held.shrink(1);
+            player.displayClientMessage(Component.translatable("message.colorist.add_success"), false);
+            return InteractionResult.SUCCESS;
         }
-        player.sendMessage(Text.translatable("message.colorist.cannot_dye"), false);
-        return ActionResult.FAIL;
+        player.displayClientMessage(Component.translatable("message.colorist.cannot_dye"), false);
+        return InteractionResult.FAIL;
     }
 
-    private ActionResult processBook(World world, BlockPos pos, PlayerEntity player, MagicTableBlockEntity table, ItemStack book, ItemStack held) {
+    private InteractionResult processBook(Level level, BlockPos pos, Player player, MagicTableBlockEntity table, ItemStack book, ItemStack held) {
         MagicBookData data = book.getOrDefault(ModComponents.MAGIC_BOOK, MagicBookData.DEFAULT);
         List<MagicAttrData> attrs = new ArrayList<>(data.attrs());
-        if (held.isOf(ModItems.MAGIC_PAPER)) {
+        if (held.is(ModItems.MAGIC_PAPER)) {
             if (attrs.size() >= AttrUtil.MAX_ATTRS) {
-                player.sendMessage(Text.translatable("message.colorist.book_full"), false);
-                return ActionResult.FAIL;
+                player.displayClientMessage(Component.translatable("message.colorist.book_full"), false);
+                return InteractionResult.FAIL;
             }
             MagicPaperData paperData = held.getOrDefault(ModComponents.MAGIC_PAPER, MagicPaperData.DEFAULT);
             MagicAttrData newAttr = AttrUtil.calculateFromPaper(paperData.level(), paperData.attr());
@@ -111,13 +112,13 @@ public class MagicTableBlock extends Block {
             ItemStack newBook = book.copy();
             newBook.set(ModComponents.MAGIC_BOOK, new MagicBookData(attrs, combined, data.hasHpBonus()));
             table.setDisplayItem(newBook);
-            held.decrement(1);
-            player.sendMessage(Text.translatable("message.colorist.insert_success", attrs.size(), AttrUtil.MAX_ATTRS), false);
-            return ActionResult.SUCCESS;
-        } else if (held.isOf(ModItems.MAGIC_CRYSTAL)) {
+            held.shrink(1);
+            player.displayClientMessage(Component.translatable("message.colorist.insert_success", attrs.size(), AttrUtil.MAX_ATTRS), false);
+            return InteractionResult.SUCCESS;
+        } else if (held.is(ModItems.MAGIC_CRYSTAL)) {
             if (attrs.isEmpty()) {
-                player.sendMessage(Text.translatable("message.colorist.book_empty"), false);
-                return ActionResult.FAIL;
+                player.displayClientMessage(Component.translatable("message.colorist.book_empty"), false);
+                return InteractionResult.FAIL;
             }
             MagicAttrData first = new MagicAttrData(attrs.get(0).r(), attrs.get(0).g(), attrs.get(0).b(), attrs.get(0).brightness(), attrs.get(0).darkness(), attrs.get(0).level() + 5, attrs.get(0).color());
             attrs.set(0, first);
@@ -125,26 +126,26 @@ public class MagicTableBlock extends Block {
             ItemStack newBook = book.copy();
             newBook.set(ModComponents.MAGIC_BOOK, new MagicBookData(attrs, combined, data.hasHpBonus()));
             table.setDisplayItem(newBook);
-            held.decrement(1);
-            player.sendMessage(Text.translatable("message.colorist.add_success"), false);
-            return ActionResult.SUCCESS;
+            held.shrink(1);
+            player.displayClientMessage(Component.translatable("message.colorist.add_success"), false);
+            return InteractionResult.SUCCESS;
         }
-        player.sendMessage(Text.translatable("message.colorist.cannot_insert"), false);
-        return ActionResult.FAIL;
+        player.displayClientMessage(Component.translatable("message.colorist.cannot_insert"), false);
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient) {
-            BlockEntity be = world.getBlockEntity(pos);
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide) {
+            BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof MagicTableBlockEntity table && table.hasItem()) {
                 ItemStack stack = table.getDisplayItem();
                 if (!stack.isEmpty() && !player.isCreative()) {
-                    net.minecraft.util.math.Vec3d center = net.minecraft.util.math.Vec3d.ofCenter(pos);
-                    world.spawnEntity(new net.minecraft.entity.ItemEntity(world, center.x, center.y + 0.5, center.z, stack));
+                    Vec3 center = Vec3.atCenterOf(pos);
+                    level.addFreshEntity(new ItemEntity(level, center.x, center.y + 0.5, center.z, stack));
                 }
             }
         }
-        return super.onBreak(world, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 }

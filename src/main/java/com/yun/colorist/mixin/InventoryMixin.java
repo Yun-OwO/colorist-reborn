@@ -1,8 +1,8 @@
 package com.yun.colorist.mixin;
 
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.Inventory;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(PlayerInventory.class)
+@Mixin(Inventory.class)
 public class InventoryMixin {
 }
