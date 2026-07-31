@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:lily_pad"
+  ],
+  "result": { "id": "minecraft:green_dye" }
+}

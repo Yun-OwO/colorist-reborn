@@ -36,12 +36,11 @@ public class MagicTableBlock extends Block {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof MagicTableBlockEntity table)) return InteractionResult.PASS;
 
-        ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack display = table.getDisplayItem();
 
         if (!display.isEmpty() && !held.isEmpty()) {
@@ -54,6 +53,23 @@ public class MagicTableBlock extends Block {
         }
 
         if (!display.isEmpty() && held.isEmpty()) {
+            player.getInventory().placeItemBackInInventory(display.copy());
+            table.setDisplayItem(ItemStack.EMPTY);
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof MagicTableBlockEntity table)) return InteractionResult.PASS;
+
+        ItemStack display = table.getDisplayItem();
+
+        if (!display.isEmpty()) {
             player.getInventory().placeItemBackInInventory(display.copy());
             table.setDisplayItem(ItemStack.EMPTY);
             return InteractionResult.SUCCESS;

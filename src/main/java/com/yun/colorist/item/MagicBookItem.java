@@ -2,6 +2,7 @@ package com.yun.colorist.item;
 
 import com.yun.colorist.component.MagicAttrData;
 import com.yun.colorist.component.MagicBookData;
+import com.yun.colorist.event.MagicBookHandler;
 import com.yun.colorist.registry.ModComponents;
 import com.yun.colorist.registry.ModItems;
 import com.yun.colorist.registry.ModPayloads;
@@ -47,6 +48,7 @@ public class MagicBookItem extends Item {
 
         stack.setDamageValue((int) ((1 - Math.max(combined.level() / (cost * 100), 0)) * 1000));
         ModPayloads.sendMagicStart(player, combined);
+        MagicBookHandler.startCast(player);
 
         return InteractionResult.SUCCESS;
     }
