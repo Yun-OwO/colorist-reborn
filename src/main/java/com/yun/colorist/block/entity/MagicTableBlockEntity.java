@@ -21,8 +21,8 @@ public class MagicTableBlockEntity extends BlockEntity {
     public void setDisplayItem(ItemStack stack) {
         this.displayItem = stack.copy();
         setChanged();
-        if (level != null) {
-            level.sendBlockUpdated(pos, getBlockState(), getBlockState(), 3);
+        if (getLevel() != null) {
+            getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 

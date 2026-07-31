@@ -7,12 +7,11 @@ import com.yun.colorist.registry.ModRecipes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.placement.PlacementInfo;
 import net.minecraft.world.level.Level;
 
 public class WashPaperRecipe implements CraftingRecipe {
@@ -52,25 +51,13 @@ public class WashPaperRecipe implements CraftingRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 3;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        ItemStack stack = new ItemStack(ModItems.MAGIC_PAPER);
-        stack.set(ModComponents.MAGIC_PAPER, new MagicPaperData(1, "#FFFFFF"));
-        return stack;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CraftingRecipe> getSerializer() {
         return ModRecipes.WASH_PAPER_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
-        return ModRecipes.WASH_PAPER_TYPE;
+    public CraftingBookCategory category() {
+        return CraftingBookCategory.MISC;
     }
 
     @Override
@@ -81,10 +68,5 @@ public class WashPaperRecipe implements CraftingRecipe {
     @Override
     public boolean isSpecial() {
         return true;
-    }
-
-    @Override
-    public RecipeBookCategory recipeBookCategory() {
-        return null;
     }
 }

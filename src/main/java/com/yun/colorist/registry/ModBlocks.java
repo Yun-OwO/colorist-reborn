@@ -40,8 +40,8 @@ public class ModBlocks {
 
     public static void initialize() {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {
-            entries.add(MAGIC_TABLE);
-            entries.add(MAGIC_CRYSTAL_ORE);
+            entries.accept(MAGIC_TABLE);
+            entries.accept(MAGIC_CRYSTAL_ORE);
         });
     }
 }

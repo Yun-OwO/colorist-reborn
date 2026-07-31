@@ -37,7 +37,7 @@ public class MagicTableBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof MagicTableBlockEntity table)) return InteractionResult.PASS;
 
@@ -136,7 +136,7 @@ public class MagicTableBlock extends Block {
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof MagicTableBlockEntity table && table.hasItem()) {
                 ItemStack stack = table.getDisplayItem();

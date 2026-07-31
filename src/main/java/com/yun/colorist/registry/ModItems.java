@@ -38,13 +38,13 @@ public class ModItems {
 
     public static void initialize() {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(entries -> {
-            entries.add(RAINBOW_DYE);
-            entries.add(GRAYSCALE_DYE);
-            entries.add(BLEAK_DYE);
-            entries.add(SOIL_DYE);
-            entries.add(MAGIC_PAPER);
-            entries.add(MAGIC_CRYSTAL);
-            entries.add(MAGIC_BOOK);
+            entries.accept(RAINBOW_DYE);
+            entries.accept(GRAYSCALE_DYE);
+            entries.accept(BLEAK_DYE);
+            entries.accept(SOIL_DYE);
+            entries.accept(MAGIC_PAPER);
+            entries.accept(MAGIC_CRYSTAL);
+            entries.accept(MAGIC_BOOK);
         });
     }
 }

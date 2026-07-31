@@ -1,5 +1,6 @@
 package com.yun.colorist.event;
 
+import com.yun.colorist.registry.ModBlocks;
 import com.yun.colorist.registry.ModItems;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.resources.Identifier;
@@ -17,7 +18,7 @@ public class LootHandler {
     public static void register() {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             if (!source.isBuiltin()) return;
-            Identifier id = key.location();
+            Identifier id = key.identifier();
 
             if (matchesEntity(id, EntityType.WITCH)) {
                 tableBuilder.withPool(buildMagicPaperPool(1, 2));
@@ -37,13 +38,13 @@ public class LootHandler {
             } else if (id.equals(Identifier.withDefaultNamespace("blocks/amethyst_block"))) {
                 tableBuilder.withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(ModItems.MAGIC_CRYSTAL_ORE)));
+                        .add(LootItem.lootTableItem(ModBlocks.MAGIC_CRYSTAL_ORE)));
             }
         });
     }
 
     private static boolean matchesEntity(Identifier lootTableId, EntityType<?> type) {
-        return type.getDefaultLootTable().location().equals(lootTableId);
+        return type.getDefaultLootTable().identifier().equals(lootTableId);
     }
 
     private static LootPool.Builder buildMagicPaperPool(int min, int max) {

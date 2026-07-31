@@ -24,4 +24,4 @@ Thumbs.db
 *.log
 
 # Reference KubeJS project (not part of the mod)
-colorist/
+/colorist/
