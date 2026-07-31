@@ -1,7 +1,7 @@
-{
+﻿{
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "minecraft:sugar" }
+    "minecraft:sugar"
   ],
   "result": { "id": "minecraft:white_dye" }
 }

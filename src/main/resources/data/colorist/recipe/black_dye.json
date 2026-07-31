@@ -1,7 +1,7 @@
-{
+﻿{
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "minecraft:coal" }
+    "minecraft:coal"
   ],
   "result": { "id": "minecraft:black_dye" }
 }

@@ -1,12 +1,12 @@
-{
+﻿{
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "minecraft:brown_dye" },
-    { "item": "minecraft:lime_dye" },
-    { "item": "minecraft:light_blue_dye" },
-    { "item": "minecraft:magenta_dye" },
-    { "item": "minecraft:pink_dye" },
-    { "item": "colorist:soil_dye" }
+    "minecraft:brown_dye",
+    "minecraft:lime_dye",
+    "minecraft:light_blue_dye",
+    "minecraft:magenta_dye",
+    "minecraft:pink_dye",
+    "colorist:soil_dye"
   ],
   "result": { "id": "colorist:bleak_dye" }
 }
