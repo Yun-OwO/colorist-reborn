@@ -1,27 +1,30 @@
-# Build output
-build/
+# gradle
 .gradle/
+build/
 out/
-*.class
-
-# IDE
+classes/
+# eclipse
+*.launch
+# idea
 .idea/
 *.iml
-.vscode/
+*.ipr
+*.iws
+# vscode
 .settings/
-.project
+.vscode/
+bin/
 .classpath
-
-# Minecraft / Fabric
+.project
+# macos
+*.DS_Store
+# fabric
 run/
-runs/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Other
-*.log
+# java
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
 
 # Reference KubeJS project (not part of the mod)
 colorist/
