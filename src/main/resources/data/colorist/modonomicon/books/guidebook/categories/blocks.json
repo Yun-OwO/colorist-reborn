@@ -1,0 +1,8 @@
+{
+  "name": "modonomicon.colorist.guidebook.blocks",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_table",
+  "entries": [
+    "colorist:guidebook/blocks/magic_table"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "modonomicon.colorist.guidebook.magic_paper",
+  "category": "colorist:guidebook/items",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_paper",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "modonomicon.colorist.guidebook.magic_paper.title",
+      "text": "modonomicon.colorist.guidebook.magic_paper.text"
+    },
+    {
+      "type": "modonomicon:recipe",
+      "recipe": "colorist:magic_paper",
+      "text": "modonomicon.colorist.guidebook.magic_paper.recipe_text"
+    }
+  ]
+}

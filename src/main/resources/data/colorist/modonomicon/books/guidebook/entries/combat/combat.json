@@ -1,0 +1,13 @@
+{
+  "name": "modonomicon.colorist.guidebook.combat",
+  "category": "colorist:guidebook/combat",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_book",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "modonomicon.colorist.guidebook.combat.title",
+      "text": "modonomicon.colorist.guidebook.combat.text"
+    }
+  ]
+}

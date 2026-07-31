@@ -1,0 +1,10 @@
+{
+  "name": "modonomicon.colorist.guidebook.items",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_book",
+  "entries": [
+    "colorist:guidebook/items/magic_book",
+    "colorist:guidebook/items/magic_paper",
+    "colorist:guidebook/items/dyes"
+  ]
+}

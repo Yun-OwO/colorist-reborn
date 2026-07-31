@@ -1,0 +1,8 @@
+{
+  "name": "modonomicon.colorist.guidebook.combat",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_book",
+  "entries": [
+    "colorist:guidebook/combat/combat"
+  ]
+}

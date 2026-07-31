@@ -1,0 +1,13 @@
+{
+  "name": "modonomicon.colorist.guidebook.dyes",
+  "category": "colorist:guidebook/items",
+  "hide_when_locked": false,
+  "icon": "colorist:rainbow_dye",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "modonomicon.colorist.guidebook.dyes.title",
+      "text": "modonomicon.colorist.guidebook.dyes.text"
+    }
+  ]
+}

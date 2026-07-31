@@ -1,0 +1,7 @@
+{
+  "name": "modonomicon.colorist.guidebook",
+  "description": "modonomicon.colorist.guidebook.description",
+  "icon": "colorist:item/magic_book",
+  "creative_tab": "minecraft:ingredients",
+  "show_in_inventory": true
+}

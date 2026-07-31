@@ -1,0 +1,18 @@
+{
+  "name": "modonomicon.colorist.guidebook.magic_table",
+  "category": "colorist:guidebook/blocks",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_table",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "title": "modonomicon.colorist.guidebook.magic_table.title",
+      "text": "modonomicon.colorist.guidebook.magic_table.text"
+    },
+    {
+      "type": "modonomicon:recipe",
+      "recipe": "colorist:magic_table",
+      "text": "modonomicon.colorist.guidebook.magic_table.recipe_text"
+    }
+  ]
+}
