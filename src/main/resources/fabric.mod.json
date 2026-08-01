@@ -25,9 +25,6 @@
     ],
     "jei_mod_plugin": [
       "com.yun.colorist.compat.jei.ColoristJeiPlugin"
-    ],
-    "rei_client": [
-      "com.yun.colorist.compat.rei.ColoristReiPlugin"
     ]
   },
   "mixins": [
