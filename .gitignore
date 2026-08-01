@@ -20,5 +20,8 @@ nbproject/
 Thumbs.db
 
 # CI logs
-run_logs/
-run_logs.zip
+run_logs*/
+run_logs*.zip
+
+# Mojang mappings (downloaded, not source)
+mappings/

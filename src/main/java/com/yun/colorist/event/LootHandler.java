@@ -1,5 +1,6 @@
 package com.yun.colorist.event;
 
+import com.yun.colorist.Colorist;
 import com.yun.colorist.component.MagicPaperData;
 import com.yun.colorist.registry.ModBlocks;
 import com.yun.colorist.registry.ModComponents;
@@ -26,28 +27,35 @@ public class LootHandler {
     };
 
     public static void register() {
+        Colorist.LOGGER.debug("Registering LootHandler");
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             if (!source.isBuiltin()) return;
             Identifier id = key.identifier();
 
             if (matchesEntity(id, EntityType.WITCH)) {
+                Colorist.LOGGER.debug("Modifying witch loot table");
                 tableBuilder.withPool(buildMagicPaperPool(1, 2, "#00CCCC"));
                 tableBuilder.withPool(buildCrystalPool(2, 3));
             } else if (matchesEntity(id, EntityType.CREEPER)) {
+                Colorist.LOGGER.debug("Modifying creeper loot table");
                 tableBuilder.withPool(buildMagicPaperPool(0, 1, "#66FF00"));
                 tableBuilder.withPool(buildTntPool(0, 1));
             } else if (matchesEntity(id, EntityType.SKELETON)) {
+                Colorist.LOGGER.debug("Modifying skeleton loot table");
                 tableBuilder.withPool(buildMagicPaperPool(0, 1, "#FFFFFF"));
             } else if (matchesEntity(id, EntityType.WARDEN)) {
+                Colorist.LOGGER.debug("Modifying warden loot table");
                 tableBuilder.withPool(buildCrystalPool(4, 6));
                 tableBuilder.withPool(buildDyePool(Items.BLACK_DYE, 0, 5));
                 tableBuilder.withPool(buildMagicPaperPool(0, 3, "#008888"));
             } else if (matchesEntity(id, EntityType.ENDERMAN)) {
+                Colorist.LOGGER.debug("Modifying enderman loot table");
                 tableBuilder.withPool(buildCrystalPool(1, 2));
                 tableBuilder.withPool(buildDyePool(Items.BLACK_DYE, 0, 2));
                 tableBuilder.withPool(buildObsidianPool(1, 1));
                 tableBuilder.withPool(buildMagicPaperPool(0, 2, "#00CCCC"));
             } else if (id.equals(Identifier.withDefaultNamespace("blocks/amethyst_block"))) {
+                Colorist.LOGGER.debug("Modifying amethyst block loot table -> magic crystal ore");
                 tableBuilder.withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(ModBlocks.MAGIC_CRYSTAL_ORE)));

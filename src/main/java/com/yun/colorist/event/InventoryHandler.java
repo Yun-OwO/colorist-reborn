@@ -1,5 +1,6 @@
 package com.yun.colorist.event;
 
+import com.yun.colorist.Colorist;
 import com.yun.colorist.component.MagicBookData;
 import com.yun.colorist.registry.ModComponents;
 import com.yun.colorist.registry.ModItems;
@@ -20,6 +21,7 @@ public class InventoryHandler {
     private static final Map<UUID, Boolean> HAS_BOOK = new HashMap<>();
 
     public static void register() {
+        Colorist.LOGGER.debug("Registering InventoryHandler tick listener");
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 updatePlayer(player);
@@ -27,6 +29,7 @@ public class InventoryHandler {
         });
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+            Colorist.LOGGER.debug("Player {} respawned, checking health bonus", newPlayer.getName().getString());
             HAS_BOOK.remove(newPlayer.getUUID());
             ItemStack book = findBook(newPlayer);
             if (!book.isEmpty()) {
@@ -36,6 +39,7 @@ public class InventoryHandler {
                 newPlayer.getAttribute(Attributes.MAX_HEALTH).setBaseValue(base + hp);
                 newPlayer.setHealth((float) (base + hp));
                 HAS_BOOK.put(newPlayer.getUUID(), true);
+                Colorist.LOGGER.debug("Applied HP bonus on respawn: +{}", hp);
             }
         });
     }
@@ -49,9 +53,11 @@ public class InventoryHandler {
         double base = player.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
 
         if (hasBook && !hadBook) {
+            Colorist.LOGGER.debug("Player {} acquired magic book, adding HP bonus: +{}", player.getName().getString(), hp);
             player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(base + hp);
             HAS_BOOK.put(player.getUUID(), true);
         } else if (!hasBook && hadBook) {
+            Colorist.LOGGER.debug("Player {} lost magic book, removing HP bonus: -{}", player.getName().getString(), hp);
             player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(base - hp);
             HAS_BOOK.put(player.getUUID(), false);
         }

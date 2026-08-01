@@ -15,18 +15,31 @@ public class Colorist implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Colorist initializing...");
+        long startTime = System.currentTimeMillis();
+        LOGGER.info("=== Colorist v{} initializing (main) ===", System.getProperty("mod_version", "1.0-beta"));
+        LOGGER.info("Java: {}, Minecraft: 1.21.11, Fabric: {}", System.getProperty("java.version"), System.getProperty("minecraft_version", "?"));
 
+        LOGGER.info("Registering data components...");
         ModComponents.initialize();
+        LOGGER.info("Registering items...");
         ModItems.initialize();
+        LOGGER.info("Registering blocks...");
         ModBlocks.initialize();
+        LOGGER.info("Registering block entities...");
         ModBlockEntities.initialize();
+        LOGGER.info("Registering recipes...");
         ModRecipes.initialize();
+        LOGGER.info("Registering network payloads...");
         ModPayloads.initialize();
 
+        LOGGER.info("Registering event handlers...");
         InventoryHandler.register();
         LootHandler.register();
         MagicBookHandler.register();
+        LOGGER.info("Registering world features...");
         ModBiomeModifications.register();
+
+        long elapsed = System.currentTimeMillis() - startTime;
+        LOGGER.info("=== Colorist main initialization complete ({} ms) ===", elapsed);
     }
 }

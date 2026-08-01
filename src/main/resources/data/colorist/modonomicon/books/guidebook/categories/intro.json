@@ -1,0 +1,8 @@
+{
+  "name": "modonomicon.colorist.guidebook.intro",
+  "hide_when_locked": false,
+  "icon": "colorist:magic_book",
+  "entries": [
+    "colorist:guidebook/intro/intro"
+  ]
+}

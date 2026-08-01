@@ -19,6 +19,15 @@
     ],
     "client": [
       "com.yun.colorist.client.ColoristClient"
+    ],
+    "modmenu": [
+      "com.yun.colorist.compat.modmenu.ModMenuIntegration"
+    ],
+    "jei_mod_plugin": [
+      "com.yun.colorist.compat.jei.ColoristJeiPlugin"
+    ],
+    "rei_client": [
+      "com.yun.colorist.compat.rei.ColoristReiPlugin"
     ]
   },
   "mixins": [
@@ -31,8 +40,19 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "roughlyenoughitems": "*",
-    "jei": "*",
-    "modmenu": "*"
+    "jei": ">=27.0.0",
+    "roughlyenoughitems": ">=21.11.0",
+    "jeresources": ">=1.9.0",
+    "modmenu": ">=17.0.0",
+    "yet_another_config_lib": ">=3.8.0",
+    "geckolib": ">=5.4.0",
+    "modonomicon": ">=1.120.0"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/example"
+      }
+    }
   }
 }

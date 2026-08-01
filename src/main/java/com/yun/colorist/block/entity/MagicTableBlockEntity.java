@@ -1,5 +1,6 @@
 package com.yun.colorist.block.entity;
 
+import com.yun.colorist.Colorist;
 import com.yun.colorist.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +13,7 @@ public class MagicTableBlockEntity extends BlockEntity {
 
     public MagicTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MAGIC_TABLE, pos, state);
+        Colorist.LOGGER.debug("MagicTableBlockEntity created at {}", pos);
     }
 
     public ItemStack getDisplayItem() {
@@ -19,6 +21,7 @@ public class MagicTableBlockEntity extends BlockEntity {
     }
 
     public void setDisplayItem(ItemStack stack) {
+        Colorist.LOGGER.debug("MagicTableBlockEntity.setDisplayItem: {} -> {} at {}", this.displayItem.getItem(), stack.getItem(), getBlockPos());
         this.displayItem = stack.copy();
         setChanged();
         if (getLevel() != null) {

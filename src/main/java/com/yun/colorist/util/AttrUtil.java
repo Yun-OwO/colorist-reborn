@@ -71,16 +71,14 @@ public class AttrUtil {
     }
 
     public static Component progressText(MagicAttrData attr) {
-        Component result = Component.empty();
         int r = attr.r();
         int g = attr.g();
         int b = attr.b();
         int sum = r + g + b;
-        if (sum == 0) return result;
-        result.copy().append(progressBlock(r, sum, "red"));
-        result.copy().append(progressBlock(g, sum, "green"));
-        result.copy().append(progressBlock(b, sum, "blue"));
-        return result;
+        if (sum == 0) return Component.empty();
+        return Component.empty().append(progressBlock(r, sum, "red"))
+                .append(progressBlock(g, sum, "green"))
+                .append(progressBlock(b, sum, "blue"));
     }
 
     private static Component progressBlock(int part, int sum, String color) {
@@ -94,7 +92,7 @@ public class AttrUtil {
         for (int i = 0; i < text.length(); i++) {
             float ratio = i / (float) Math.max(text.length() - 1, 1);
             String color = ColorUtil.merge(startColor, endColor, ratio);
-            result.copy().append(Component.literal(String.valueOf(text.charAt(i))).setStyle(Style.EMPTY.withColor(ColorUtil.hexToInt(color))));
+            result = result.copy().append(Component.literal(String.valueOf(text.charAt(i))).setStyle(Style.EMPTY.withColor(ColorUtil.hexToInt(color))));
         }
         return result;
     }

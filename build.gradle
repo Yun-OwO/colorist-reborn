@@ -12,6 +12,11 @@ base {
 
 repositories {
 	mavenCentral()
+	// Optional dependency repositories
+	maven { url = "https://cursemaven.com" }
+	maven { url = "https://api.modrinth.com/maven" }
+	maven { url = "https://maven.isxander.dev/releases" }
+	maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
 }
 
 loom {
@@ -29,6 +34,22 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// --- Optional mod compatibility (compile-only, not bundled) ---
+	// ModMenu
+	modCompileOnly("curse.maven:modmenu-308702:7808841")
+	// YetAnotherConfigLib
+	modCompileOnly("dev.isxander:yet-another-config-lib:3.8.1+1.21.11-fabric")
+	// JEI
+	modCompileOnly("curse.maven:jei-238222:8512714")
+	// REI (currently disabled - classpath conflicts)
+	// modCompileOnly("curse.maven:roughly-enough-items-310111:7486489")
+	// Just Enough Resources
+	// modCompileOnly("curse.maven:just-enough-resources-jer-240630:7831276")
+	// GeckoLib
+	modCompileOnly("software.bernie.geckolib:geckolib-fabric-1.21.11:5.4")
+	// Modonomicon
+	modCompileOnly("maven.modrinth:692GClaE:CBWrBBZp")
 }
 
 processResources {
